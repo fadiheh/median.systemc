@@ -20,12 +20,22 @@
 #include <tlm.h>
 #include "tlm_utils/simple_initiator_socket.h"
 
+#include <iostream>
+#include "memory.h"
+#include "image.h"
+
+
+void medianFilter(const unsigned char input[][100], unsigned char output[][100], unsigned int width, unsigned int height);
+
 // Module implementing Median Filter
 SC_MODULE(median_module)
 {
   // Interface to Image Memory
   tlm_utils::simple_initiator_socket<median_module> socket;
-
+  //interface to TB
+  sc_in<bool> clk;
+  sc_in<bool> start;
+  sc_out<bool> finish;
   // Image Dimensions
   static const unsigned int width  = 100;
   static const unsigned int height = 100;
